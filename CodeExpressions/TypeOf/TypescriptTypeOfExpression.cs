@@ -1,6 +1,5 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using TypescriptCodeDom.Common;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.TypeOf
@@ -9,7 +8,7 @@ namespace TypescriptCodeDom.CodeExpressions.TypeOf
     {
         private readonly CodeTypeOfExpression _codeExpression;
         private readonly CodeGeneratorOptions _options;
-        private ITypescriptTypeMapper _typescriptTypeMapper;
+        private readonly ITypescriptTypeMapper _typescriptTypeMapper;
 
         public TypescriptTypeOfExpression(
             CodeTypeOfExpression codeExpression, 

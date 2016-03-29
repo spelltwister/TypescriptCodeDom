@@ -1,7 +1,6 @@
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TypescriptCodeDom.CodeTypeParameters;
@@ -85,23 +84,22 @@ namespace TypescriptCodeDom.CodeTypeMembers
                 baseTypesExpression = $" extends {string.Join(",", baseTypes)}";
             }
 
-            return _options.IndentString + $"{accessModifier}{typeType} {name}{typeParametersExpression}{baseTypesExpression}{{{Environment.NewLine}{membersExpression}{Environment.NewLine}{_options.IndentString}}}";
-
+            return  $"{_options.IndentString}{accessModifier}{typeType} {name}{typeParametersExpression}{baseTypesExpression}{{{Environment.NewLine}{membersExpression}{Environment.NewLine}{_options.IndentString}}}";
         }
 
-        private bool IsSupportedType(CodeTypeMember member)
+        private static bool IsSupportedType(CodeTypeMember member)
         {
             return !(member is CodeMemberEvent);
         }
 
-        private string GetAccessModifier(TypeAttributes attributes)
+        private static string GetAccessModifier(TypeAttributes attributes)
         {
             return (attributes & TypeAttributes.Public) == TypeAttributes.Public
                 ? "export "
                 : string.Empty;
         }
 
-        private string GetTypeOfType(CodeTypeDeclaration typeDeclaration)
+        private static string GetTypeOfType(CodeTypeDeclaration typeDeclaration)
         {
             return typeDeclaration.IsEnum
                 ? "enum"

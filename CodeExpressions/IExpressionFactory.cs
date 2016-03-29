@@ -1,7 +1,5 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.IO;
-using System.Xml.Serialization;
 
 namespace TypescriptCodeDom.CodeExpressions
 {

@@ -1,7 +1,6 @@
 ﻿using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Linq;
-using TypescriptCodeDom.Common;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.ArrayCreate

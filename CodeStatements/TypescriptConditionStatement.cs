@@ -1,7 +1,6 @@
 using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
-using System.Linq;
 using TypescriptCodeDom.CodeExpressions;
 
 namespace TypescriptCodeDom.CodeStatements
@@ -25,7 +24,6 @@ namespace TypescriptCodeDom.CodeStatements
             _options = options;
         }
 
-
         public string Expand()
         {
             var conditionExpression = _expressionFactory.GetExpression(_statement.Condition, _options).Evaluate();
@@ -41,7 +39,5 @@ namespace TypescriptCodeDom.CodeStatements
 
             return conditionalIfBlock;
         }
-
-        
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.CodeDom;
 using System.CodeDom.Compiler;
-using TypescriptCodeDom.Common;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.Cast
@@ -24,7 +23,6 @@ namespace TypescriptCodeDom.CodeExpressions.Cast
             _typescriptTypeMapper = typescriptTypeMapper;
             System.Diagnostics.Debug.WriteLine("TypescriptCastExpression Created");
         }
-
 
         public string Evaluate()
         {

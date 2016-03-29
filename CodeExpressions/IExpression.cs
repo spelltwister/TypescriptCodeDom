@@ -1,7 +1,4 @@
-﻿using System.CodeDom;
-using System.CodeDom.Compiler;
-
-namespace TypescriptCodeDom.CodeExpressions
+﻿namespace TypescriptCodeDom.CodeExpressions
 {   
     public interface IExpression
     {

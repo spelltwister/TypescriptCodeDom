@@ -1,7 +1,6 @@
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using TypescriptCodeDom.CodeExpressions;
-using TypescriptCodeDom.Common;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeStatements
@@ -12,7 +11,7 @@ namespace TypescriptCodeDom.CodeStatements
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeVariableDeclarationStatement _statement;
         private readonly CodeGeneratorOptions _options;
-        private TypescriptTypeMapper _typescriptTypeMapper;
+        private readonly TypescriptTypeMapper _typescriptTypeMapper;
 
         public TypescriptVariableDeclarationStatement(
             IStatementFactory statementFactory,
@@ -27,12 +26,12 @@ namespace TypescriptCodeDom.CodeStatements
             _typescriptTypeMapper = new TypescriptTypeMapper();
         }
 
-
         public string Expand()
         {
             var type = _typescriptTypeMapper.GetTypeOutput(_statement.Type);
             var initializationExpression = _expressionFactory.GetExpression(_statement.InitExpression, _options).Evaluate();
 
+            // TODO: pretty sure this is a bug
             return $"{_options.IndentString}{_options.IndentString}{_options.IndentString}var {_statement.Name}: {type} = {initializationExpression};}}";
         }
     }

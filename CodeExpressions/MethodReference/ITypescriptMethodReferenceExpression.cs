@@ -1,6 +1,4 @@
-﻿using System.CodeDom;
-
-namespace TypescriptCodeDom.CodeExpressions.MethodReference
+﻿namespace TypescriptCodeDom.CodeExpressions.MethodReference
 {
     public interface ITypescriptMethodReferenceExpression : IExpression { }
 }

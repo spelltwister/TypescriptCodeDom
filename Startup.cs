@@ -1,5 +1,4 @@
-﻿using System;
-using System.CodeDom.Compiler;
+﻿using System.CodeDom.Compiler;
 using Microsoft.Practices.Unity;
 using TypescriptCodeDom.CodeExpressions;
 using TypescriptCodeDom.CodeExpressions.ArgumentReference;
@@ -128,6 +127,5 @@ namespace TypescriptCodeDom
         {
             _unityContainer.RegisterType<TInterface, TImplementation>(new ContainerControlledLifetimeManager());
         }
-
     }
 }

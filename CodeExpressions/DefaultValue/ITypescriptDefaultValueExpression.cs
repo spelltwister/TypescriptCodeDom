@@ -1,6 +1,4 @@
-﻿using System.CodeDom;
-
-namespace TypescriptCodeDom.CodeExpressions.DefaultValue
+﻿namespace TypescriptCodeDom.CodeExpressions.DefaultValue
 {
     public interface ITypescriptDefaultValueExpression : IExpression { }
 }

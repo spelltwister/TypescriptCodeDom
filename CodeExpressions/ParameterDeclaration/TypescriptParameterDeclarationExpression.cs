@@ -1,6 +1,5 @@
 ﻿using System.CodeDom;
 using System.CodeDom.Compiler;
-using TypescriptCodeDom.Common;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.ParameterDeclaration

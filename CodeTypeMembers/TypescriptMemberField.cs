@@ -1,5 +1,4 @@
 using System.CodeDom;
-using System.Linq;
 using TypescriptCodeDom.CodeExpressions;
 using TypescriptCodeDom.Common;
 using TypescriptCodeDom.Common.TypeMapper;
@@ -36,11 +35,9 @@ namespace TypescriptCodeDom.CodeTypeMembers
                 {
                     return $"{_options.IndentString}{_member.Name},";
                 }
-                else
-                {
-                    var initializationExpression = _expressionFactory.GetExpression(_member.InitExpression, new System.CodeDom.Compiler.CodeGeneratorOptions()).Evaluate();
-                    return _options.IndentString + (initializationExpression == null ? $"{_member.Name}," : $"{_member.Name}={initializationExpression},");
-                }
+
+                var initializationExpression = _expressionFactory.GetExpression(_member.InitExpression, new CodeGeneratorOptions()).Evaluate();
+                return _options.IndentString + (initializationExpression == null ? $"{_member.Name}," : $"{_member.Name}={initializationExpression},");
             }
 
             string fieldDeclaration = $"{_member.Name.ConvertPascalCaseToCamelCase()}: {_typescriptTypeMapper.GetTypeOutput(_member.Type)};";

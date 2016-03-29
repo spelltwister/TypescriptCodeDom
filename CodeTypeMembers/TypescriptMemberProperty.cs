@@ -3,7 +3,6 @@ using System.CodeDom;
 using System.CodeDom.Compiler;
 using TypescriptCodeDom.CodeExpressions;
 using TypescriptCodeDom.CodeStatements;
-using TypescriptCodeDom.Common;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeTypeMembers

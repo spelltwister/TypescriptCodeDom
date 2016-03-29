@@ -1,6 +1,4 @@
-﻿using System.CodeDom;
-
-namespace TypescriptCodeDom.CodeExpressions.Indexer
+﻿namespace TypescriptCodeDom.CodeExpressions.Indexer
 {
-    public interface ITypescriptIndexerExpression : IExpression{ }
+    public interface ITypescriptIndexerExpression : IExpression { }
 }

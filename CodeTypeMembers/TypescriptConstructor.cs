@@ -4,8 +4,6 @@ using System.CodeDom.Compiler;
 using System.Linq;
 using TypescriptCodeDom.CodeExpressions;
 using TypescriptCodeDom.CodeStatements;
-using TypescriptCodeDom.CodeTypeParameters;
-using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeTypeMembers
 {
@@ -52,7 +50,6 @@ namespace TypescriptCodeDom.CodeTypeMembers
             }
 
             return $"{_options.IndentString}{_member.GetAccessModifier()} constructor({parameters}){{{Environment.NewLine}{baseContructorArgsExpression}{statements}{Environment.NewLine}{_options.IndentString}{_options.IndentString}}}";
-
         }
     }
 }

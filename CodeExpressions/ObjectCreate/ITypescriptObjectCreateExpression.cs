@@ -1,6 +1,4 @@
-﻿using System.CodeDom;
-
-namespace TypescriptCodeDom.CodeExpressions.ObjectCreate
+﻿namespace TypescriptCodeDom.CodeExpressions.ObjectCreate
 {
     public interface ITypescriptObjectCreateExpression : IExpression { }
 }

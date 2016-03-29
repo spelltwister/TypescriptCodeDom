@@ -9,8 +9,8 @@ namespace TypescriptCodeDom.Common.TypeMapper
     public class TypescriptTypeMapper : ITypescriptTypeMapper
     {
         private readonly Dictionary<string, string> _typeMap;
-        private readonly Regex _baseTypeRegex = new Regex(@"(?<TypeName>([a-zA-Z]+[0-9.]*)+)");
-        private readonly Regex _arrayRegex = new Regex(@"(?<TypeName>[a-zA-Z0-9\.]+)(?<TypeArguments>[`0-9]*)(\[(?<JaggedRank>\]\[)*|(?<DimensionalRank>,)*\])+$");
+        private static readonly Regex _baseTypeRegex = new Regex(@"(?<TypeName>([a-zA-Z]+[0-9.]*)+)");
+        private static readonly Regex _arrayRegex = new Regex(@"(?<TypeName>[a-zA-Z0-9\.]+)(?<TypeArguments>[`0-9]*)(\[(?<JaggedRank>\]\[)*|(?<DimensionalRank>,)*\])+$");
 
         public TypescriptTypeMapper()
         {
@@ -20,30 +20,69 @@ namespace TypescriptCodeDom.Common.TypeMapper
             System.Diagnostics.Debug.WriteLine("TypescriptTypeMapper Created");
         }
 
+        private static class TypeScriptTypeNames
+        {
+            public static readonly string Number  = "number";
+            public static readonly string String  = "string";
+            public static readonly string Boolean = "boolean";
+            public static readonly string Void    = "void";
+            public static readonly string Any     = "any";
+            public static readonly string Date    = "date";
+            public static readonly string Array   = "array";
+        }
+
+        private static readonly Type[] NumberTypes = new Type[]
+        {
+            typeof(int    ),
+            typeof(uint   ),
+            typeof(long   ),
+            typeof(ulong  ),
+            typeof(short  ),
+            typeof(ushort ),
+            typeof(float  ),
+            typeof(double ),
+            typeof(decimal),
+            typeof(byte   )
+        };
+
+        private static readonly Type[] StringTypes = new Type[]
+        {
+            typeof(string),
+            typeof(Guid  ),
+            typeof(char  )
+        };
+
+        public static bool IsNumberType(Type type)
+        {
+            return NumberTypes.Any(x => type == x);
+        }
+
         private void AddAllKnownTypes()
         {
-            _typeMap[typeof(int).FullName] = "number";
-            _typeMap[typeof(uint).FullName] = "number";
-            _typeMap[typeof(long).FullName] = "number";
-            _typeMap[typeof(ulong).FullName] = "number";
-            _typeMap[typeof(short).FullName] = "number";
-            _typeMap[typeof(ushort).FullName] = "number";
-            _typeMap[typeof(float).FullName] = "number";
-            _typeMap[typeof(double).FullName] = "number";
-            _typeMap[typeof(decimal).FullName] = "number";
-            _typeMap[typeof(byte).FullName] = "number";
-            _typeMap[typeof(string).FullName] = "string";
-            _typeMap[typeof(Guid).FullName] = "string";
-            _typeMap[typeof(bool).FullName] = "boolean";
-            _typeMap[typeof(void).FullName] = "void";
-            _typeMap[typeof(object).FullName] = "any";
-            _typeMap[typeof(DateTime).FullName] = "Date";
-            _typeMap[typeof(DateTimeOffset).FullName] = "Date";
-            _typeMap["System.Collections.Generic.List"] = "Array";
-            _typeMap["System.Collections.Generic.IList"] = "Array";
-            _typeMap["System.Collections.Generic.IEnumerable"] = "Array";
-            _typeMap["System.Collections.IEnumerable"] = "Array";
-            _typeMap["System.Array"] = "Array";
+            foreach (Type numberType in NumberTypes)
+            {
+                this._typeMap[numberType.FullName] = TypeScriptTypeNames.Number;
+            }
+
+            foreach (Type stringType in StringTypes)
+            {
+                this._typeMap[stringType.FullName] = TypeScriptTypeNames.String;
+            }
+
+            _typeMap[typeof (bool).FullName] = TypeScriptTypeNames.Boolean;
+            _typeMap[typeof (void).FullName] = TypeScriptTypeNames.Void;
+            _typeMap[typeof(object).FullName] = TypeScriptTypeNames.Any;
+            _typeMap[typeof(DateTime).FullName] = TypeScriptTypeNames.Date;
+            _typeMap[typeof(DateTimeOffset).FullName] = TypeScriptTypeNames.Date;
+
+            _typeMap["System.Collections.Generic.List"]               = TypeScriptTypeNames.Array;
+            _typeMap["System.Collections.Generic.IList"]              = TypeScriptTypeNames.Array;
+            _typeMap["System.Collections.Generic.Collection"]         = TypeScriptTypeNames.Array;
+            _typeMap["System.Collections.Generic.ICollection"]        = TypeScriptTypeNames.Array;
+            _typeMap[typeof(System.Collections.ICollection).FullName] = TypeScriptTypeNames.Array;
+            _typeMap["System.Collections.Generic.IEnumerable"]        = TypeScriptTypeNames.Array;
+            _typeMap[typeof(System.Collections.IEnumerable).FullName] = TypeScriptTypeNames.Array;
+            _typeMap[typeof(System.Array).FullName]                   = TypeScriptTypeNames.Array;
         }
 
         public bool IsValidTypeForDerivation(CodeTypeReference type)
@@ -62,7 +101,6 @@ namespace TypescriptCodeDom.Common.TypeMapper
                 .Captures[0]
                 .Value;
 
-
             string typeOutputString;
 
             if (baseTypeName.Contains("Nullable"))
@@ -78,9 +116,10 @@ namespace TypescriptCodeDom.Common.TypeMapper
             }
 
             if (_arrayRegex.IsMatch(type.BaseType))
-                typeOutputString = GetArrayType(type.BaseType, typeOutputString);
-            else if (type.ArrayRank > 0)
-                typeOutputString = GetArrayString(typeOutputString, type.ArrayRank);
+                return GetArrayType(type.BaseType, typeOutputString);
+
+            if (type.ArrayRank > 0)
+                return GetArrayString(typeOutputString, type.ArrayRank);
                         
             return typeOutputString;
         }

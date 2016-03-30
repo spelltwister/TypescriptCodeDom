@@ -46,7 +46,7 @@ namespace TypescriptCodeDom.CodeTypeMembers
             }
             else if ((bool)_member.UserData["HasBaseConstructorCall"])
             {
-                baseContructorArgsExpression = "super();";
+                baseContructorArgsExpression = "{_options.IndentString}{_options.IndentString}{_options.IndentString}super();";
             }
 
             return $"{_options.IndentString}{_member.GetAccessModifier()} constructor({parameters}){{{Environment.NewLine}{baseContructorArgsExpression}{statements}{Environment.NewLine}{_options.IndentString}{_options.IndentString}}}";

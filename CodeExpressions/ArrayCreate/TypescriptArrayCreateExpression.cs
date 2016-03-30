@@ -30,7 +30,7 @@ namespace TypescriptCodeDom.CodeExpressions.ArrayCreate
             string sizeEvaluationString = string.Empty;
             if (_codeExpression.SizeExpression != null)
             {
-                var sizeExpression = _expressionFactory.GetExpression(_codeExpression, _options);
+                var sizeExpression = _expressionFactory.GetExpression(_codeExpression.SizeExpression, _options);
                 sizeEvaluationString = sizeExpression.Evaluate();
             }
             else if (_codeExpression.Size > 0)

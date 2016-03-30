@@ -27,7 +27,7 @@ namespace TypescriptCodeDom.CodeExpressions.Cast
         public string Evaluate()
         {
             var typeOutput = _typescriptTypeMapper.GetTypeOutput(_codeExpression.TargetType);
-            var expression = _expressionFactory.GetExpression(_codeExpression, _options);
+            var expression = _expressionFactory.GetExpression(_codeExpression.Expression, _options);
             var expressionToCast = expression.Evaluate();
             return $"<{typeOutput}>({expressionToCast})";
         }

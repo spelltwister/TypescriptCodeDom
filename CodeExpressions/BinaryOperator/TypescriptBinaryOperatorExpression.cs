@@ -21,15 +21,14 @@ namespace TypescriptCodeDom.CodeExpressions.BinaryOperator
             System.Diagnostics.Debug.WriteLine("TypescriptBinaryOperatorExpression Created");
         }
 
-
         public string Evaluate()
         {
-            var leftExpression = _expressionFactory.GetExpression(_codeExpression, _options);
+            var leftExpression = _expressionFactory.GetExpression(_codeExpression.Left, _options);
             var leftOperand = leftExpression.Evaluate();
 
             var operatorString = GetOperatorString(_codeExpression.Operator);
 
-            var rightExpression = _expressionFactory.GetExpression(_codeExpression, _options);
+            var rightExpression = _expressionFactory.GetExpression(_codeExpression.Right, _options);
             var rightOperand = rightExpression.Evaluate();
 
             return $"{leftOperand} {operatorString} {rightOperand}";

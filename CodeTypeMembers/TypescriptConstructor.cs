@@ -42,11 +42,11 @@ namespace TypescriptCodeDom.CodeTypeMembers
             var baseContructorArgsExpression = string.Empty;
             if (baseConstructorArgs.Any() || _member.ImplementationTypes.Count > 0)
             {
-                baseContructorArgsExpression = $"super({string.Join(",", baseConstructorArgs)});";
+                baseContructorArgsExpression = $"{_options.IndentString}{_options.IndentString}{_options.IndentString}super({string.Join(",", baseConstructorArgs)});{Environment.NewLine}";
             }
             else if ((bool)_member.UserData["HasBaseConstructorCall"])
             {
-                baseContructorArgsExpression = "{_options.IndentString}{_options.IndentString}{_options.IndentString}super();";
+                baseContructorArgsExpression = $"{_options.IndentString}{_options.IndentString}{_options.IndentString}super();{Environment.NewLine}";
             }
 
             return $"{_options.IndentString}{_member.GetAccessModifier()} constructor({parameters}){{{Environment.NewLine}{baseContructorArgsExpression}{statements}{Environment.NewLine}{_options.IndentString}{_options.IndentString}}}";

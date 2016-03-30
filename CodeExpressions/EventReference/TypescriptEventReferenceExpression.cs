@@ -22,7 +22,7 @@ namespace TypescriptCodeDom.CodeExpressions.EventReference
 
         public string Evaluate()
         {
-            var targetObjectExpression = _expressionFactory.GetExpression(_codeExpression, _options);
+            var targetObjectExpression = _expressionFactory.GetExpression(_codeExpression.TargetObject, _options);
             return $"{targetObjectExpression.Evaluate()}.{_codeExpression.EventName}";
         }
     }

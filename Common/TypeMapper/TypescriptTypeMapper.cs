@@ -27,8 +27,8 @@ namespace TypescriptCodeDom.Common.TypeMapper
             public static readonly string Boolean = "boolean";
             public static readonly string Void    = "void";
             public static readonly string Any     = "any";
-            public static readonly string Date    = "date";
-            public static readonly string Array   = "array";
+            public static readonly string Date    = "Date";
+            public static readonly string Array   = "Array";
         }
 
         private static readonly Type[] NumberTypes = new Type[]

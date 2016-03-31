@@ -49,7 +49,6 @@ namespace TypescriptCodeDom
             RegisterTypes();
         }
 
-
         private void RegisterTypes()
         {
             RegisterCodeGenerator();
@@ -61,38 +60,38 @@ namespace TypescriptCodeDom
             RegisterTypescriptNamespace();
         }
 
-        private void RegisterTypescriptNamespace()
+        protected virtual void RegisterTypescriptNamespace()
         {
             RegisterSingletonType<ITypescriptNamespace, TypescriptNamespace>();
         }
 
-        private void RegisterTypescriptTypeParameter()
+        protected virtual void RegisterTypescriptTypeParameter()
         {
             RegisterSingletonType<ITypescriptTypeParameter, TypescriptTypeParameter>();
         }
 
-        private void RegisterMember()
+        protected virtual void RegisterMember()
         {
             RegisterSingletonType<IMemberFactory, MemberFactory>();
         }
 
-        private void RegisterCommonTypes()
+        protected virtual void RegisterCommonTypes()
         {
             RegisterSingletonType<ITypescriptKeywordsHandler, TypescriptKeywordsHandler>();
             RegisterSingletonType<ITypescriptTypeMapper, TypescriptTypeMapper>();
         }
 
-        private void RegisterStatements()
+        protected virtual void RegisterStatements()
         {
             RegisterSingletonType<IStatementFactory, StatementFactory>();
         }
 
-        private void RegisterCodeGenerator()
+        protected virtual void RegisterCodeGenerator()
         {
             RegisterSingletonType<ICodeGenerator, TypescriptCodeGenerator>();
         }
 
-        private void RegisterExpressions()
+        protected virtual void RegisterExpressions()
         {
             RegisterSingletonType<IExpressionFactory, ExpressionFactory>();
             RegisterSingletonType<ITypescriptArgumentReferenceExpression, TypescriptArgumentReferenceExpression>();
@@ -122,7 +121,7 @@ namespace TypescriptCodeDom
             RegisterSingletonType<ITypescriptVariableReferenceExpression, TypescriptVariableReferenceExpression>();
         }
 
-        private void RegisterSingletonType<TInterface, TImplementation>()
+        protected virtual void RegisterSingletonType<TInterface, TImplementation>()
             where TImplementation : TInterface
         {
             _unityContainer.RegisterType<TInterface, TImplementation>(new ContainerControlledLifetimeManager());

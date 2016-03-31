@@ -20,7 +20,7 @@ namespace TypescriptCodeDom.Common.TypeMapper
             System.Diagnostics.Debug.WriteLine("TypescriptTypeMapper Created");
         }
 
-        private static class TypeScriptTypeNames
+        protected static class TypeScriptTypeNames
         {
             public static readonly string Number  = "number";
             public static readonly string String  = "string";
@@ -90,29 +90,38 @@ namespace TypescriptCodeDom.Common.TypeMapper
             return !type.BaseType.Equals(typeof (object).FullName);
         }
 
-        public string GetTypeOutput(CodeTypeReference type)
+        protected string GetTypeBaseName(CodeTypeReference type)
         {
             if (!_baseTypeRegex.IsMatch(type.BaseType))
                 throw new ArgumentException("Type mismatch");
 
-            var baseTypeName = _baseTypeRegex
+            return _baseTypeRegex
                 .Match(type.BaseType)
                 .Groups["TypeName"]
                 .Captures[0]
                 .Value;
+        }
 
-            string typeOutputString;
+        protected virtual string UpdateBaseTypeNameWithTypeArgsInner(string currentTypeName, CodeTypeReference typeReference)
+        {
+            return AddTypeArguments(typeReference, currentTypeName);
+        }
 
-            if (baseTypeName.Contains("Nullable"))
+        protected string UpdateBaseTypeNameWithTypeArgs(string currentTypeName, CodeTypeReference typeReference)
+        {
+            if ("System.Nullable".Equals(currentTypeName, StringComparison.OrdinalIgnoreCase))
             {
-                typeOutputString = GetTypeArgument(type);
+                return GetTypeOutput(typeReference.TypeArguments.OfType<CodeTypeReference>().Single());
             }
-            else
-            {
-                typeOutputString = TranslateType(baseTypeName);
+            return UpdateBaseTypeNameWithTypeArgsInner(currentTypeName, typeReference);
+        }
 
-                if (type.TypeArguments.Count > 0)
-                    typeOutputString = AddTypeArguments(type, typeOutputString);
+        public string GetTypeOutput(CodeTypeReference type)
+        {
+            string typeOutputString = TranslateType(GetTypeBaseName(type));
+            if (type.TypeArguments.Count > 0)
+            {
+                typeOutputString = UpdateBaseTypeNameWithTypeArgs(typeOutputString, type);
             }
 
             if (_arrayRegex.IsMatch(type.BaseType))
@@ -124,7 +133,7 @@ namespace TypescriptCodeDom.Common.TypeMapper
             return typeOutputString;
         }
 
-        private string AddTypeArguments(CodeTypeReference type, string typeOutputString)
+        protected string AddTypeArguments(CodeTypeReference type, string typeOutputString)
         {
             var typeArguments = type.TypeArguments
                 .OfType<CodeTypeReference>()
@@ -142,7 +151,7 @@ namespace TypescriptCodeDom.Common.TypeMapper
             return $"{string.Join(", ", typeArguments)}";
         }
 
-        private string TranslateType(string baseTypeName)
+        protected virtual string TranslateType(string baseTypeName)
         {
             return _typeMap.ContainsKey(baseTypeName) ? _typeMap[baseTypeName] : baseTypeName;
         }
@@ -151,11 +160,12 @@ namespace TypescriptCodeDom.Common.TypeMapper
         {
             var matches = _arrayRegex.Match(baseType);
             var jaggedcount = matches.Groups["JaggedRank"].Captures.Count;
-            var dimensionalArrayCount = matches.Groups["DimensionalRank"].Captures.Count;
             if (jaggedcount > 0)
             {
                 return GetArrayString(actualTypeName, jaggedcount + 1);
             }
+
+            var dimensionalArrayCount = matches.Groups["DimensionalRank"].Captures.Count;
             if (dimensionalArrayCount > 0)
             {
                 return GetArrayString(actualTypeName, dimensionalArrayCount + 1);

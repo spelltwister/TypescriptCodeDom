@@ -147,8 +147,13 @@
     <Compile Include="Common\Keyword\ITypescriptKeywordsHandler.cs" />
     <Compile Include="Common\TypeMapper\ITypescriptTypeMapper.cs" />
     <Compile Include="Common\Keyword\TypescriptKeywordsHandler.cs" />
+    <Compile Include="Common\TypeMapper\KnockoutTypescriptTypeMapper.cs" />
     <Compile Include="Common\TypeMapper\TypescriptTypeMapper.cs" />
     <Compile Include="CodeStatements\Extensions.cs" />
+    <Compile Include="KnockoutStartup.cs" />
+    <Compile Include="KnockoutTypescriptCodeProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="TypescriptCodeGenerator.cs" />

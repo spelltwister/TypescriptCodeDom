@@ -2,30 +2,27 @@ using System;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Linq;
-using TypescriptCodeDom.CodeExpressions;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeStatements
 {
-    class TypescriptTryCatchFinallyStatement : IStatement
+    public sealed class TypescriptTryCatchFinallyStatement : IStatement
     {
         private readonly IStatementFactory _statementFactory;
-        private readonly IExpressionFactory _expressionFactory;
         private readonly CodeTryCatchFinallyStatement _statement;
         private readonly CodeGeneratorOptions _options;
-        private TypescriptTypeMapper _typescriptTypeMapper;
+        private readonly ITypescriptTypeMapper _typescriptTypeMapper;
 
         public TypescriptTryCatchFinallyStatement(
             IStatementFactory statementFactory,
-            IExpressionFactory expressionFactory,
             CodeTryCatchFinallyStatement statement,
-            CodeGeneratorOptions options)
+            CodeGeneratorOptions options,
+            ITypescriptTypeMapper typescriptTypeMapper)
         {
             _statementFactory = statementFactory;
-            _expressionFactory = expressionFactory;
             _statement = statement;
             _options = options;
-            _typescriptTypeMapper = new TypescriptTypeMapper();
+            _typescriptTypeMapper = typescriptTypeMapper;
         }
 
         public string Expand()

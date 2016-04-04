@@ -1,22 +1,18 @@
 ﻿using System.CodeDom;
-using System.CodeDom.Compiler;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.ParameterDeclaration
 {
-    class TypescriptParameterDeclarationExpression : ITypescriptParameterDeclarationExpression
+    public sealed class TypescriptParameterDeclarationExpression : ITypescriptParameterDeclarationExpression
     {
         private readonly CodeParameterDeclarationExpression _codeExpression;
-        private readonly CodeGeneratorOptions _options;
-        private ITypescriptTypeMapper _typescriptTypeMapper;
+        private readonly ITypescriptTypeMapper _typescriptTypeMapper;
 
         public TypescriptParameterDeclarationExpression(
             CodeParameterDeclarationExpression codeExpression,
-            CodeGeneratorOptions options,
             ITypescriptTypeMapper typescriptTypeMapper)
         {
             _codeExpression = codeExpression;
-            _options = options;
             _typescriptTypeMapper = typescriptTypeMapper;
             System.Diagnostics.Debug.WriteLine("TypescriptParameterDeclarationExpression Created");
         }

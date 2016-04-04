@@ -4,7 +4,7 @@ using TypescriptCodeDom.CodeExpressions;
 
 namespace TypescriptCodeDom.CodeStatements
 {
-    class TypescriptAssignStatement : IStatement
+    public sealed class TypescriptAssignStatement : IStatement
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeAssignStatement _codeAssignStatement;

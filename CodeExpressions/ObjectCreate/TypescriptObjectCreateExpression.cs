@@ -4,12 +4,12 @@ using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.ObjectCreate
 {
-    class TypescriptObjectCreateExpression : ITypescriptObjectCreateExpression
+    public sealed class TypescriptObjectCreateExpression : ITypescriptObjectCreateExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeObjectCreateExpression _codeExpression;
         private readonly CodeGeneratorOptions _options;
-        private ITypescriptTypeMapper _typescriptTypeMapper;
+        private readonly ITypescriptTypeMapper _typescriptTypeMapper;
 
         public TypescriptObjectCreateExpression(
             IExpressionFactory expressionFactory, 

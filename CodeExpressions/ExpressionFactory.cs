@@ -31,7 +31,7 @@ using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions
 {
-    public class ExpressionFactory : IExpressionFactory
+    public sealed class ExpressionFactory : IExpressionFactory
     {
         private readonly ITypescriptTypeMapper _typescriptTypeMapper;
         private readonly Dictionary<Type, Func<CodeExpression, CodeGeneratorOptions, IExpression>> _expressionMap;
@@ -48,13 +48,13 @@ namespace TypescriptCodeDom.CodeExpressions
 
         private void ConstructExpressions()
         {
-            _expressionMap[typeof(CodeArgumentReferenceExpression)] = (codeExpression, options) => new TypescriptArgumentReferenceExpression((CodeArgumentReferenceExpression)codeExpression, options);
+            _expressionMap[typeof(CodeArgumentReferenceExpression)] = (codeExpression, options) => new TypescriptArgumentReferenceExpression((CodeArgumentReferenceExpression)codeExpression);
             _expressionMap[typeof(CodeArrayCreateExpression)] = (codeExpression, options) => new TypescriptArrayCreateExpression(this, (CodeArrayCreateExpression)codeExpression, options, _typescriptTypeMapper);
             _expressionMap[typeof(CodeArrayIndexerExpression)] = (codeExpression, options) => new TypescriptArrayIndexerExpression(this, (CodeArrayIndexerExpression)codeExpression, options);
-            _expressionMap[typeof(CodeBaseReferenceExpression)] = (codeExpression, options) => new TypescriptBaseReferenceExpression((CodeBaseReferenceExpression)codeExpression, options);
+            _expressionMap[typeof(CodeBaseReferenceExpression)] = (codeExpression, options) => new TypescriptBaseReferenceExpression();
             _expressionMap[typeof(CodeBinaryOperatorExpression)] = (codeExpression, options) => new TypescriptBinaryOperatorExpression(this, (CodeBinaryOperatorExpression)codeExpression, options);
             _expressionMap[typeof(CodeCastExpression)] = (codeExpression, options) => new TypescriptCastExpression(this, (CodeCastExpression)codeExpression, options, _typescriptTypeMapper);
-            _expressionMap[typeof(CodeDefaultValueExpression)] = (codeExpression, options) => new TypescriptDefaultValueExpression((CodeDefaultValueExpression)codeExpression, options, _typescriptTypeMapper);
+            _expressionMap[typeof(CodeDefaultValueExpression)] = (codeExpression, options) => new TypescriptDefaultValueExpression((CodeDefaultValueExpression)codeExpression, _typescriptTypeMapper);
             _expressionMap[typeof(CodeDelegateCreateExpression)] = (codeExpression, options) => new TypescriptDelegateCreateExpression(this, (CodeDelegateCreateExpression)codeExpression, options);
             _expressionMap[typeof(CodeDelegateInvokeExpression)] = (codeExpression, options) => new TypescriptDelegateInvokeExpression(this, (CodeDelegateInvokeExpression)codeExpression, options);
             _expressionMap[typeof(CodeDirectionExpression)] = (codeExpression, options) => new TypescriptDirectionExpression(this, (CodeDirectionExpression)codeExpression, options);
@@ -64,23 +64,24 @@ namespace TypescriptCodeDom.CodeExpressions
             _expressionMap[typeof(CodeMethodInvokeExpression)] = (codeExpression, options) => new TypescriptMethodInvokeExpression(this, (CodeMethodInvokeExpression)codeExpression, options);
             _expressionMap[typeof(CodeMethodReferenceExpression)] = (codeExpression, options) => new TypescriptMethodReferenceExpression(this, (CodeMethodReferenceExpression)codeExpression, options);
             _expressionMap[typeof(CodeObjectCreateExpression)] = (codeExpression, options) => new TypescriptObjectCreateExpression(this, (CodeObjectCreateExpression)codeExpression, options, _typescriptTypeMapper);
-            _expressionMap[typeof(CodeParameterDeclarationExpression)] = (codeExpression, options) => new TypescriptParameterDeclarationExpression((CodeParameterDeclarationExpression)codeExpression, options, _typescriptTypeMapper);
+            _expressionMap[typeof(CodeParameterDeclarationExpression)] = (codeExpression, options) => new TypescriptParameterDeclarationExpression((CodeParameterDeclarationExpression)codeExpression, _typescriptTypeMapper);
             _expressionMap[typeof(CodePrimitiveExpression)] = (codeExpression, options) => new TypescriptPrimitiveExpression((CodePrimitiveExpression)codeExpression, options);
             _expressionMap[typeof(CodePropertyReferenceExpression)] = (codeExpression, options) => new TypescriptPropertyReferenceExpression(this, (CodePropertyReferenceExpression)codeExpression, options);
-            _expressionMap[typeof(CodePropertySetValueReferenceExpression)] = (codeExpression, options) => new TypescriptPropertySetValueReferenceExpression((CodePropertySetValueReferenceExpression)codeExpression, options);
-            _expressionMap[typeof(CodeSnippetExpression)] = (codeExpression, options) => new TypescriptSnippetExpression((CodeSnippetExpression)codeExpression, options);
-            _expressionMap[typeof(CodeThisReferenceExpression)] = (codeExpression, options) => new TypescriptThisReferenceExpression((CodeThisReferenceExpression)codeExpression, options);
-            _expressionMap[typeof(CodeTypeOfExpression)] = (codeExpression, options) => new TypescriptTypeOfExpression((CodeTypeOfExpression)codeExpression, options, _typescriptTypeMapper);
-            _expressionMap[typeof(CodeTypeReferenceExpression)] = (codeExpression, options) => new TypescriptTypeReferenceExpression((CodeTypeReferenceExpression)codeExpression, options, _typescriptTypeMapper);
-            _expressionMap[typeof(CodeVariableReferenceExpression)] = (codeExpression, options) => new TypescriptVariableReferenceExpression((CodeVariableReferenceExpression)codeExpression, options);
+            _expressionMap[typeof(CodePropertySetValueReferenceExpression)] = (codeExpression, options) => new TypescriptPropertySetValueReferenceExpression();
+            _expressionMap[typeof(CodeSnippetExpression)] = (codeExpression, options) => new TypescriptSnippetExpression((CodeSnippetExpression)codeExpression);
+            _expressionMap[typeof(CodeThisReferenceExpression)] = (codeExpression, options) => new TypescriptThisReferenceExpression();
+            _expressionMap[typeof(CodeTypeOfExpression)] = (codeExpression, options) => new TypescriptTypeOfExpression((CodeTypeOfExpression)codeExpression, _typescriptTypeMapper);
+            _expressionMap[typeof(CodeTypeReferenceExpression)] = (codeExpression, options) => new TypescriptTypeReferenceExpression((CodeTypeReferenceExpression)codeExpression,  _typescriptTypeMapper);
+            _expressionMap[typeof(CodeVariableReferenceExpression)] = (codeExpression, options) => new TypescriptVariableReferenceExpression((CodeVariableReferenceExpression)codeExpression);
         }
 
         public IExpression GetExpression(CodeExpression expression, CodeGeneratorOptions options)
         {
-            if (expression==null)
+            if (expression == null)
             {
                 throw new ArgumentNullException("expression");
             }
+
             return _expressionMap[expression.GetType()](expression, options);
         }
     }

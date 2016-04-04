@@ -4,20 +4,17 @@ using TypescriptCodeDom.CodeExpressions;
 
 namespace TypescriptCodeDom.CodeStatements
 {
-    class TypescriptRemoveEventStatement : IStatement
+    public sealed class TypescriptRemoveEventStatement : IStatement
     {
-        private readonly IStatementFactory _statementFactory;
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeRemoveEventStatement _statement;
         private readonly CodeGeneratorOptions _options;
 
         public TypescriptRemoveEventStatement(
-            IStatementFactory statementFactory,
             IExpressionFactory expressionFactory,
             CodeRemoveEventStatement statement,
             CodeGeneratorOptions options)
         {
-            _statementFactory = statementFactory;
             _expressionFactory = expressionFactory;
             _statement = statement;
             _options = options;

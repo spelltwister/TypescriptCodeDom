@@ -6,7 +6,7 @@ namespace TypescriptCodeDom
 {
     public class TypescriptCodeProvider : CodeDomProvider
     {
-        private ICodeGenerator _codeGenerator;
+        private readonly ICodeGenerator _codeGenerator;
 
         public TypescriptCodeProvider()
         {

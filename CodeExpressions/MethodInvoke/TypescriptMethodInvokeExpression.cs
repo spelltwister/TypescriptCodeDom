@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.MethodInvoke
 {
-    class TypescriptMethodInvokeExpression : ITypescriptMethodInvokeExpression
+    public sealed class TypescriptMethodInvokeExpression : ITypescriptMethodInvokeExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeMethodInvokeExpression _codeExpression;
@@ -23,9 +23,10 @@ namespace TypescriptCodeDom.CodeExpressions.MethodInvoke
         public string Evaluate()
         {
             var methodExpression = _expressionFactory.GetExpression(_codeExpression.Method, _options);
-
             var parameters = _codeExpression.Parameters.GetParametersFromExpressions(_expressionFactory, _options);
             
+            // TODO: move the indent to caller; there are many places where you would not want indentation
+            // eg, var a = getValue();
             return $"{_options.IndentString}{_options.IndentString}{_options.IndentString}{methodExpression.Evaluate()}({parameters})";
         }
     }

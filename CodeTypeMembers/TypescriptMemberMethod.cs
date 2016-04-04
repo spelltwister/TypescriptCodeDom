@@ -35,13 +35,11 @@ namespace TypescriptCodeDom.CodeTypeMembers
             _options = options;
         }
 
-
         public string Expand()
         {
             var parameters = _member.Parameters.GetParametersFromExpressions(_expressionFactory, _options);
             var returnType = _typescriptTypeMapper.GetTypeOutput(_member.ReturnType);
             var statements = _member.Statements.GetStatementsFromCollection(_statementFactory, _options);
-
 
             var typeParameters = _member.TypeParameters.OfType<CodeTypeParameter>()
                 .Select(parameter => _typescriptTypeParameter.Evaluate(parameter))

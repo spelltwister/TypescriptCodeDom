@@ -36,9 +36,7 @@ namespace TypescriptCodeDom
             _typescriptNamespace = typescriptNamespace;
             _statementFactory = statementFactory;
             System.Diagnostics.Debug.WriteLine("TypescriptCodeGenerator Created");
-
         }
-
 
         public bool IsValidIdentifier(string value)
         {
@@ -91,7 +89,6 @@ namespace TypescriptCodeDom
             | GeneratorSupport.GenericTypeDeclaration
             | GeneratorSupport.DeclareIndexerProperties;
         }
-
 
         public void GenerateCodeFromExpression(CodeExpression codeExpression, TextWriter textWriter, CodeGeneratorOptions options)
         {

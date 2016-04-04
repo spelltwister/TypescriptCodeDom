@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.PropertyReference
 {
-    class TypescriptPropertyReferenceExpression : ITypescriptPropertyReferenceExpression
+    public sealed class TypescriptPropertyReferenceExpression : ITypescriptPropertyReferenceExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodePropertyReferenceExpression _codeExpression;
@@ -19,7 +19,6 @@ namespace TypescriptCodeDom.CodeExpressions.PropertyReference
             _options = options;
             System.Diagnostics.Debug.WriteLine("TypescriptPropertyReferenceExpression Created");
         }
-
 
         public string Evaluate()
         {

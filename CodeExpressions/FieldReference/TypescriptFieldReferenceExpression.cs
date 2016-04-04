@@ -4,7 +4,7 @@ using TypescriptCodeDom.Common;
 
 namespace TypescriptCodeDom.CodeExpressions.FieldReference
 {
-    class TypescriptFieldReferenceExpression : ITypescriptFieldReferenceExpression
+    public sealed class TypescriptFieldReferenceExpression : ITypescriptFieldReferenceExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeFieldReferenceExpression _codeExpression;

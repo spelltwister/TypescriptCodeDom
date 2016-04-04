@@ -22,7 +22,6 @@ namespace TypescriptCodeDom.CodeTypeMembers
         private readonly ITypescriptTypeParameter _typescriptTypeParameter;
         private readonly Dictionary<Type, Func<CodeTypeMember, CodeGeneratorOptions, IMember>> _memberMap;
 
-
         public MemberFactory(
             IExpressionFactory expressionFactory,
             IStatementFactory statementFactory,
@@ -37,20 +36,18 @@ namespace TypescriptCodeDom.CodeTypeMembers
 
             ConstructMembers();
             System.Diagnostics.Debug.WriteLine("MemberFactory Created");
-
         }
 
         private void ConstructMembers()
         {
-            _memberMap[typeof(CodeMemberEvent)] = (member, options) => new TypescriptMemberEvent(_expressionFactory, _typescriptTypeMapper, (CodeMemberEvent)member, options);
+            _memberMap[typeof(CodeMemberEvent)] = (member, options) => new TypescriptMemberEvent(_typescriptTypeMapper, (CodeMemberEvent)member, options);
             _memberMap[typeof(CodeMemberField)] = (member, options) => new TypescriptMemberField(_expressionFactory, _typescriptTypeMapper, (CodeMemberField)member, options);
             _memberMap[typeof(CodeMemberMethod)] = (member, options) => new TypescriptMemberMethod(_expressionFactory, _statementFactory, _typescriptTypeMapper,_typescriptTypeParameter, (CodeMemberMethod)member, options);
             _memberMap[typeof(CodeConstructor)] = (member, options) => new TypescriptConstructor(_expressionFactory, _statementFactory, (CodeConstructor)member, options);
             _memberMap[typeof(CodeMemberProperty)] = (member, options) => new TypescriptMemberProperty((CodeMemberProperty)member, _statementFactory, _expressionFactory,_typescriptTypeMapper, options);
-            _memberMap[typeof(CodeSnippetTypeMember)] = (member, options) => new TypescriptSnippetTypeMember((CodeSnippetTypeMember)member, options);
+            _memberMap[typeof(CodeSnippetTypeMember)] = (member, options) => new TypescriptSnippetTypeMember((CodeSnippetTypeMember)member);
             _memberMap[typeof(CodeTypeDeclaration)] = (member, options) => new TypescriptTypeDeclaration((CodeTypeDeclaration)member, this, _typescriptTypeMapper, _typescriptTypeParameter, options);
         }
-
 
         public IMember GetMember(CodeTypeMember member, CodeGeneratorOptions codeGeneratorOptions)
         {

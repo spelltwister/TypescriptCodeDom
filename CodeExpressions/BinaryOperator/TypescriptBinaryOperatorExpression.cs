@@ -4,7 +4,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.BinaryOperator
 {
-    internal class TypescriptBinaryOperatorExpression : ITypescriptBinaryOperatorExpression
+    public sealed class TypescriptBinaryOperatorExpression : ITypescriptBinaryOperatorExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeBinaryOperatorExpression _codeExpression;
@@ -34,7 +34,7 @@ namespace TypescriptCodeDom.CodeExpressions.BinaryOperator
             return $"{leftOperand} {operatorString} {rightOperand}";
         }
 
-        private string GetOperatorString(CodeBinaryOperatorType operatorType)
+        public static string GetOperatorString(CodeBinaryOperatorType operatorType)
         {
             switch (operatorType)
             {

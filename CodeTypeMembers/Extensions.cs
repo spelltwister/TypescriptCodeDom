@@ -15,8 +15,6 @@ namespace TypescriptCodeDom.CodeTypeMembers
                 default:
                     return string.Empty;
             }
-
-
         }
     }
 }

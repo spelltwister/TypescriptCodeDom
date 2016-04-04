@@ -1,19 +1,9 @@
-﻿using System.CodeDom;
-using System.CodeDom.Compiler;
-
-namespace TypescriptCodeDom.CodeExpressions.ThisReference
+﻿namespace TypescriptCodeDom.CodeExpressions.ThisReference
 {
-    class TypescriptThisReferenceExpression : ITypescriptThisReferenceExpression
+    public sealed class TypescriptThisReferenceExpression : ITypescriptThisReferenceExpression
     {
-        private readonly CodeThisReferenceExpression _codeExpression;
-        private readonly CodeGeneratorOptions _options;
-
-        public TypescriptThisReferenceExpression(
-            CodeThisReferenceExpression codeExpression, 
-            CodeGeneratorOptions options)
+        public TypescriptThisReferenceExpression()
         {
-            _codeExpression = codeExpression;
-            _options = options;
             System.Diagnostics.Debug.WriteLine("TypescriptThisReferenceExpression Created");
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TypescriptCodeDom.CodeExpressions.ArrayIndexer
 {
-    class TypescriptArrayIndexerExpression : ITypescriptArrayIndexerExpression
+    public sealed class TypescriptArrayIndexerExpression : ITypescriptArrayIndexerExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeArrayIndexerExpression _codeExpression;
@@ -23,7 +23,6 @@ namespace TypescriptCodeDom.CodeExpressions.ArrayIndexer
 
         public string Evaluate()
         {
-
             var indexExpressions = _codeExpression.Indices
                 .OfType<CodeExpression>()
                 .Select(expression =>

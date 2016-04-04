@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.Direction
 {
-    class TypescriptDirectionExpression : ITypescriptDirectionExpression
+    public sealed class TypescriptDirectionExpression : ITypescriptDirectionExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeDirectionExpression _codeExpression;

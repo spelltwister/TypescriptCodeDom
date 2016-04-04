@@ -1,19 +1,14 @@
 ﻿using System.CodeDom;
-using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.VariableReference
 {
-    class TypescriptVariableReferenceExpression : ITypescriptVariableReferenceExpression
+    public sealed class TypescriptVariableReferenceExpression : ITypescriptVariableReferenceExpression
     {
         private readonly CodeVariableReferenceExpression _codeExpression;
-        private readonly CodeGeneratorOptions _options;
 
-        public TypescriptVariableReferenceExpression(
-            CodeVariableReferenceExpression codeExpression, 
-            CodeGeneratorOptions options)
+        public TypescriptVariableReferenceExpression(CodeVariableReferenceExpression codeExpression)
         {
             _codeExpression = codeExpression;
-            _options = options;
             System.Diagnostics.Debug.WriteLine("TypescriptVariableReferenceExpression Created");
         }
 

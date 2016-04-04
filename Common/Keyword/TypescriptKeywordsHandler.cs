@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TypescriptCodeDom.Common.Keyword
 {
-    public class TypescriptKeywordsHandler : ITypescriptKeywordsHandler
+    public sealed class TypescriptKeywordsHandler : ITypescriptKeywordsHandler
     {
         private readonly HashSet<string> _keywords;
 
@@ -14,7 +14,6 @@ namespace TypescriptCodeDom.Common.Keyword
             AddAllBaseKeywords();
             AddAllPredefinedTypes();
             System.Diagnostics.Debug.WriteLine("TypescriptKeywordhandler Created");
-
         }
 
         private void AddAllPredefinedTypes()

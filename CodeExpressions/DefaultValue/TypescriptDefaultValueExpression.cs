@@ -1,22 +1,18 @@
 ﻿using System.CodeDom;
-using System.CodeDom.Compiler;
 using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.DefaultValue
 {
-    class TypescriptDefaultValueExpression : ITypescriptDefaultValueExpression
+    public sealed class TypescriptDefaultValueExpression : ITypescriptDefaultValueExpression
     {
         private readonly CodeDefaultValueExpression _codeExpression;
-        private readonly CodeGeneratorOptions _options;
         private readonly ITypescriptTypeMapper _typescriptTypeMapper;
 
         public TypescriptDefaultValueExpression(
             CodeDefaultValueExpression codeExpression,
-            CodeGeneratorOptions options, 
             ITypescriptTypeMapper typescriptTypeMapper)
         {
             _codeExpression = codeExpression;
-            _options = options;
             _typescriptTypeMapper = typescriptTypeMapper;
             System.Diagnostics.Debug.WriteLine("TypescriptDefaultValueExpression Created");
         }

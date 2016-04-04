@@ -4,7 +4,7 @@ using TypescriptCodeDom.CodeExpressions;
 
 namespace TypescriptCodeDom.CodeStatements
 {
-    class TypescriptThrowExceptionStatement : IStatement
+    public sealed class TypescriptThrowExceptionStatement : IStatement
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeThrowExceptionStatement _statement;
@@ -19,7 +19,6 @@ namespace TypescriptCodeDom.CodeStatements
             _statement = statement;
             _options = options;
         }
-
 
         public string Expand()
         {

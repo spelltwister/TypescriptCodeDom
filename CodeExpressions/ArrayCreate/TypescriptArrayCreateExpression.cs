@@ -5,7 +5,7 @@ using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.ArrayCreate
 {
-    class TypescriptArrayCreateExpression : ITypescriptArrayCreateExpression
+    public sealed class TypescriptArrayCreateExpression : ITypescriptArrayCreateExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeArrayCreateExpression _codeExpression;

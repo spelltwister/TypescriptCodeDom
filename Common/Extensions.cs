@@ -11,6 +11,5 @@ namespace TypescriptCodeDom.Common
 
             return $"{firstChar}{name.Substring(1, name.Length - 1)}";
         }
-
     }
 }

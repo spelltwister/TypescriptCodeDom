@@ -1,24 +1,20 @@
 using System.CodeDom;
-using TypescriptCodeDom.CodeExpressions;
 using TypescriptCodeDom.Common.TypeMapper;
 using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeTypeMembers
 {
-    class TypescriptMemberEvent : IMember
+    public sealed class TypescriptMemberEvent : IMember
     {
-        private readonly IExpressionFactory _expressionFactory;
         private readonly ITypescriptTypeMapper _typescriptTypeMapper;
         private readonly CodeMemberEvent _member;
         private readonly CodeGeneratorOptions _options;
 
         public TypescriptMemberEvent(
-            IExpressionFactory expressionFactory,
             ITypescriptTypeMapper typescriptTypeMapper,
             CodeMemberEvent member,
             CodeGeneratorOptions options)
         {
-            _expressionFactory = expressionFactory;
             _typescriptTypeMapper = typescriptTypeMapper;
             _member = member;
             _options = options;

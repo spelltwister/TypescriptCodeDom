@@ -4,7 +4,7 @@ using TypescriptCodeDom.Common;
 
 namespace TypescriptCodeDom.CodeExpressions.MethodReference
 {
-    class TypescriptMethodReferenceExpression : ITypescriptMethodReferenceExpression
+    public sealed class TypescriptMethodReferenceExpression : ITypescriptMethodReferenceExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeMethodReferenceExpression _codeExpression;
@@ -24,7 +24,6 @@ namespace TypescriptCodeDom.CodeExpressions.MethodReference
         public string Evaluate()
         {
             var targetObject = _expressionFactory.GetExpression(_codeExpression.TargetObject, _options);
-
             return $"{targetObject.Evaluate()}.{_codeExpression.MethodName.ConvertPascalCaseToCamelCase()}";
         }
     }

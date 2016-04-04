@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TypescriptCodeDom.CodeExpressions.Indexer
 {
-    class TypescriptIndexerExpression : ITypescriptIndexerExpression
+    public sealed class TypescriptIndexerExpression : ITypescriptIndexerExpression
     {
         private readonly CodeIndexerExpression _codeExpression;
         private readonly CodeGeneratorOptions _options;
@@ -21,7 +21,6 @@ namespace TypescriptCodeDom.CodeExpressions.Indexer
             System.Diagnostics.Debug.WriteLine("TypescriptIndexerExpression Created");
         }
 
-
         public string Evaluate()
         {
             var targetObjectExpression = _expressionFactory.GetExpression(_codeExpression.TargetObject, _options);
@@ -36,7 +35,6 @@ namespace TypescriptCodeDom.CodeExpressions.Indexer
                 .Aggregate((previous, current) => $"{previous}[{current}]");
 
             return $"{targetObjectExpression.Evaluate()}.{indexers}";
-
         }
     }
 }

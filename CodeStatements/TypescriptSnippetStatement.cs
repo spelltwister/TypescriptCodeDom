@@ -1,23 +1,14 @@
 using System.CodeDom;
-using System.CodeDom.Compiler;
-using TypescriptCodeDom.CodeExpressions;
 
 namespace TypescriptCodeDom.CodeStatements
 {
-    class TypescriptSnippetStatement : IStatement
+    public sealed class TypescriptSnippetStatement : IStatement
     {
-        private readonly IExpressionFactory _expressionFactory;
         private readonly CodeSnippetStatement _statement;
-        private readonly CodeGeneratorOptions _options;
 
-        public TypescriptSnippetStatement(
-            IExpressionFactory expressionFactory,
-            CodeSnippetStatement statement,
-            CodeGeneratorOptions options)
+        public TypescriptSnippetStatement(CodeSnippetStatement statement)
         {
-            _expressionFactory = expressionFactory;
             _statement = statement;
-            _options = options;
         }
 
         public string Expand()

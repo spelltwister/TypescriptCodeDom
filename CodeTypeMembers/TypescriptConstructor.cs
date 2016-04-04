@@ -7,7 +7,7 @@ using TypescriptCodeDom.CodeStatements;
 
 namespace TypescriptCodeDom.CodeTypeMembers
 {
-    class TypescriptConstructor : IMember
+    public sealed class TypescriptConstructor : IMember
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly IStatementFactory _statementFactory;
@@ -49,7 +49,7 @@ namespace TypescriptCodeDom.CodeTypeMembers
                 baseContructorArgsExpression = $"{_options.IndentString}{_options.IndentString}{_options.IndentString}super();{Environment.NewLine}";
             }
 
-            return $"{_options.IndentString}{_member.GetAccessModifier()} constructor({parameters}){{{Environment.NewLine}{baseContructorArgsExpression}{statements}{Environment.NewLine}{_options.IndentString}{_options.IndentString}}}";
+            return $"{_options.IndentString}{_member.GetAccessModifier()}constructor({parameters}){{{Environment.NewLine}{baseContructorArgsExpression}{statements}{Environment.NewLine}{_options.IndentString}{_options.IndentString}}}";
         }
     }
 }

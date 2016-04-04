@@ -1,19 +1,9 @@
-using System.CodeDom;
-using System.CodeDom.Compiler;
-
 namespace TypescriptCodeDom.CodeExpressions.BaseReference
 {
-    class TypescriptBaseReferenceExpression : ITypescriptBaseReferenceExpression
+    public class TypescriptBaseReferenceExpression : ITypescriptBaseReferenceExpression
     {
-        private readonly CodeBaseReferenceExpression _codeExpression;
-        private readonly CodeGeneratorOptions _options;
-
-        public TypescriptBaseReferenceExpression(
-            CodeBaseReferenceExpression codeExpression, 
-            CodeGeneratorOptions options)
+        public TypescriptBaseReferenceExpression()
         {
-            _codeExpression = codeExpression;
-            _options = options;
             System.Diagnostics.Debug.WriteLine("TypescriptBaseReferenceExpression Created");
         }
 

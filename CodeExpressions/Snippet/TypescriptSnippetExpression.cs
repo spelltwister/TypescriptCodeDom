@@ -1,19 +1,14 @@
 ﻿using System.CodeDom;
-using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.Snippet
 {
-    class TypescriptSnippetExpression : ITypescriptSnippetExpression
+    public sealed class TypescriptSnippetExpression : ITypescriptSnippetExpression
     {
         private readonly CodeSnippetExpression _codeExpression;
-        private readonly CodeGeneratorOptions _options;
 
-        public TypescriptSnippetExpression(
-            CodeSnippetExpression codeExpression, 
-            CodeGeneratorOptions options)
+        public TypescriptSnippetExpression(CodeSnippetExpression codeExpression)
         {
             _codeExpression = codeExpression;
-            _options = options;
             System.Diagnostics.Debug.WriteLine("TypescriptSnippetExpression Created");
         }
 

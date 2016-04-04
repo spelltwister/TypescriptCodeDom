@@ -7,7 +7,7 @@ using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeTypeMembers
 {
-    class TypescriptMemberProperty : IMember
+    public sealed class TypescriptMemberProperty : IMember
     {
         private readonly CodeMemberProperty _member;
         private readonly IStatementFactory _statementFactory;

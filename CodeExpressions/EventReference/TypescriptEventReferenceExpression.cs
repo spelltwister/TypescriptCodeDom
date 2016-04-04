@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.EventReference
 {
-    class TypescriptEventReferenceExpression : ITypescriptEventReferenceExpression
+    public sealed class TypescriptEventReferenceExpression : ITypescriptEventReferenceExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeEventReferenceExpression _codeExpression;

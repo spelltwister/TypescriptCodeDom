@@ -7,11 +7,10 @@ using TypescriptCodeDom.CodeTypeMembers;
 
 namespace TypescriptCodeDom.CodeNamespaces
 {
-    class TypescriptNamespace : ITypescriptNamespace
+    public sealed class TypescriptNamespace : ITypescriptNamespace
     {
         private readonly IStatementFactory _statementFactory;
         private readonly IMemberFactory _memberFactory;
-        
 
         public TypescriptNamespace(
             IStatementFactory statementFactory,
@@ -64,7 +63,6 @@ namespace TypescriptCodeDom.CodeNamespaces
             if (string.IsNullOrWhiteSpace(name))
                 return $"{importsExpression}{commentsExpression}{Environment.NewLine}{typesExpression}{Environment.NewLine}";
             return $"{importsExpression}{commentsExpression}{Environment.NewLine}module {name}{{{typesExpression}{Environment.NewLine}}}";
-
         }
     }
 }

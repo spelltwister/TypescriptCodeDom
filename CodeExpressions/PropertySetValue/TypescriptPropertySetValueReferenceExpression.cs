@@ -1,19 +1,9 @@
-﻿using System.CodeDom;
-using System.CodeDom.Compiler;
-
-namespace TypescriptCodeDom.CodeExpressions.PropertySetValue
+﻿namespace TypescriptCodeDom.CodeExpressions.PropertySetValue
 {
-    class TypescriptPropertySetValueReferenceExpression : ITypescriptPropertySetValueReferenceExpression
+    public sealed class TypescriptPropertySetValueReferenceExpression : ITypescriptPropertySetValueReferenceExpression
     {
-        private readonly CodePropertySetValueReferenceExpression _codeExpression;
-        private readonly CodeGeneratorOptions _options;
-
-        public TypescriptPropertySetValueReferenceExpression(
-            CodePropertySetValueReferenceExpression codeExpression, 
-            CodeGeneratorOptions options)
+        public TypescriptPropertySetValueReferenceExpression()
         {
-            _codeExpression = codeExpression;
-            _options = options;
             System.Diagnostics.Debug.WriteLine("TypescriptPropertySetValueReferenceExpression Created");
         }
 

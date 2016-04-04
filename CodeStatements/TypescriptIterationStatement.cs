@@ -5,7 +5,7 @@ using TypescriptCodeDom.CodeExpressions;
 
 namespace TypescriptCodeDom.CodeStatements
 {
-    class TypescriptIterationStatement : IStatement
+    public sealed class TypescriptIterationStatement : IStatement
     {
         private readonly IStatementFactory _statementFactory;
         private readonly IExpressionFactory _expressionFactory;
@@ -32,7 +32,6 @@ namespace TypescriptCodeDom.CodeStatements
             var testExpression = _expressionFactory.GetExpression(_statement.TestExpression, _options).Evaluate();
 
             return $"for ({initStatement}; {testExpression}; {incrementStatement} {{{statements}{Environment.NewLine}}}";
-
         }
     }
 }

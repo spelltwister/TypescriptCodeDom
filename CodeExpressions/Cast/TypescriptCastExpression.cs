@@ -4,7 +4,7 @@ using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeExpressions.Cast
 {
-    class TypescriptCastExpression : ITypescriptCastExpression
+    public sealed class TypescriptCastExpression : ITypescriptCastExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeCastExpression _codeExpression;

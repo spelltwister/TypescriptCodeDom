@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.Primitive
 {
-    class TypescriptPrimitiveExpression : ITypescriptPrimitiveExpression
+    public sealed class TypescriptPrimitiveExpression : ITypescriptPrimitiveExpression
     {
         private readonly CodePrimitiveExpression _codeExpression;
         private readonly CodeGeneratorOptions _options;

@@ -5,7 +5,7 @@ using TypescriptCodeDom.CodeExpressions;
 
 namespace TypescriptCodeDom.CodeStatements
 {
-    class TypescriptConditionStatement : IStatement
+    public sealed class TypescriptConditionStatement : IStatement
     {
         private readonly IStatementFactory _statementFactory;
         private readonly IExpressionFactory _expressionFactory;

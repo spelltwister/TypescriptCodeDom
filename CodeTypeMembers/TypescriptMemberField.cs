@@ -6,7 +6,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeTypeMembers
 {
-    class TypescriptMemberField : IMember
+    public sealed class TypescriptMemberField : IMember
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly ITypescriptTypeMapper _typescriptTypeMapper;
@@ -23,7 +23,6 @@ namespace TypescriptCodeDom.CodeTypeMembers
             _member = member;
             _options = options;
         }
-
 
         public string Expand()
         {

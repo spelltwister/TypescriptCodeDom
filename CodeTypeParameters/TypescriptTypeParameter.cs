@@ -4,7 +4,7 @@ using TypescriptCodeDom.Common.TypeMapper;
 
 namespace TypescriptCodeDom.CodeTypeParameters
 {
-    public class TypescriptTypeParameter : ITypescriptTypeParameter
+    public sealed class TypescriptTypeParameter : ITypescriptTypeParameter
     {
         private readonly ITypescriptTypeMapper _typescriptTypeMapper;
 
@@ -24,7 +24,6 @@ namespace TypescriptCodeDom.CodeTypeParameters
                 var type = _typescriptTypeMapper.GetTypeOutput(constraint);
                 typeParameterConstraint = $" extends {type}";
             }
-
                 
             return $"{codeTypeParameter.Name}{typeParameterConstraint}";
         }

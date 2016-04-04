@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.DelegateCreate
 {
-    class TypescriptDelegateCreateExpression : ITypescriptDelegateCreateExpression
+    public sealed class TypescriptDelegateCreateExpression : ITypescriptDelegateCreateExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeDelegateCreateExpression _codeExpression;

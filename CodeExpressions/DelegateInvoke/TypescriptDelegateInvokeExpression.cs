@@ -3,7 +3,7 @@ using System.CodeDom.Compiler;
 
 namespace TypescriptCodeDom.CodeExpressions.DelegateInvoke
 {
-    class TypescriptDelegateInvokeExpression : ITypescriptDelegateInvokeExpression
+    public sealed class TypescriptDelegateInvokeExpression : ITypescriptDelegateInvokeExpression
     {
         private readonly IExpressionFactory _expressionFactory;
         private readonly CodeDelegateInvokeExpression _codeExpression;
@@ -23,7 +23,6 @@ namespace TypescriptCodeDom.CodeExpressions.DelegateInvoke
         public string Evaluate()
         {
             var parameters = _codeExpression.Parameters.GetParametersFromExpressions(_expressionFactory, _options);
-
             var targetObject = _expressionFactory.GetExpression(_codeExpression.TargetObject, _options);
 
             return $"{targetObject.Evaluate()}({parameters})";

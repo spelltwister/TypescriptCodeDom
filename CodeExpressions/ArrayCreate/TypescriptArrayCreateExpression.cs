@@ -45,7 +45,7 @@ namespace TypescriptCodeDom.CodeExpressions.ArrayCreate
                 .OfType<CodeExpression>()
                 .Select(expression =>
                 {
-                    var initializerExpression = _expressionFactory.GetExpression(_codeExpression, _options);
+                    var initializerExpression = _expressionFactory.GetExpression(expression, _options);
                     return initializerExpression.Evaluate();
                 })
                 .ToList();

@@ -27,7 +27,7 @@ namespace TypescriptCodeDom.CodeExpressions.ArrayIndexer
                 .OfType<CodeExpression>()
                 .Select(expression =>
                 {
-                    var indexExpression = _expressionFactory.GetExpression(_codeExpression, _options);
+                    var indexExpression = _expressionFactory.GetExpression(expression, _options);
                     return indexExpression.Evaluate();
                 })
                 .Aggregate((previous, current) => $"{previous}[{current}]");

@@ -160,7 +160,12 @@ namespace TypescriptCodeDom.Common.TypeMapper
 
         private static string GetTypeBaseNamePrivate(string typeFullName)
         {
-            return typeFullName.Substring(typeFullName.IndexOf('`'));
+            int backTickIndex = typeFullName.IndexOf('`');
+            if(backTickIndex == -1)
+            {
+                return typeFullName;
+            }
+            return typeFullName.Substring(backTickIndex);
         }
 
         public bool IsValidTypeForDerivation(CodeTypeReference type)

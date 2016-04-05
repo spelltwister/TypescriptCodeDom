@@ -165,7 +165,7 @@ namespace TypescriptCodeDom.Common.TypeMapper
             {
                 return typeFullName;
             }
-            return typeFullName.Substring(backTickIndex);
+            return typeFullName.Substring(0, backTickIndex);
         }
 
         public bool IsValidTypeForDerivation(CodeTypeReference type)

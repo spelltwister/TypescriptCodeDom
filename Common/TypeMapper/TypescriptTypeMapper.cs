@@ -31,6 +31,9 @@ namespace TypescriptCodeDom.Common.TypeMapper
             public static readonly string Array   = "Array";
         }
 
+        protected static readonly string DictionaryFormatString = "{{ [key: {0}] : {1} }}";
+
+        #region Number Types
         private static readonly Type[] NumberTypes = new Type[]
         {
             typeof(int    ),
@@ -45,6 +48,19 @@ namespace TypescriptCodeDom.Common.TypeMapper
             typeof(byte   )
         };
 
+        protected virtual bool IsNumberType(Type type)
+        {
+            return NumberTypes.Any(x => type == x);
+        }
+
+        protected virtual bool IsNumberType(CodeTypeReference typeReference)
+        {
+            return NumberTypes.Select(GetTypeBaseName)
+                              .Any(x => StringComparer.OrdinalIgnoreCase.Equals(x, GetTypeBaseName(typeReference)));
+        }
+        #endregion
+
+        #region String Types
         private static readonly Type[] StringTypes = new Type[]
         {
             typeof(string),
@@ -52,10 +68,61 @@ namespace TypescriptCodeDom.Common.TypeMapper
             typeof(char  )
         };
 
-        public static bool IsNumberType(Type type)
+        protected virtual bool IsStringType(Type type)
         {
-            return NumberTypes.Any(x => type == x);
+            return StringTypes.Any(x => type == x);
         }
+
+        protected virtual bool IsStringType(CodeTypeReference typeReference)
+        {
+            return StringTypes.Select(GetTypeBaseName)
+                              .Any(x => StringComparer.OrdinalIgnoreCase.Equals(x, GetTypeBaseName(typeReference)));
+        }
+        #endregion
+
+        #region Array Types
+        private static readonly Type[] ArrayTypes = new Type[]
+        {
+            typeof (System.Collections.Generic.List<>),
+            typeof (System.Collections.Generic.IList<>),
+            typeof (System.Collections.Generic.ICollection<>),
+            typeof (System.Collections.Generic.IEnumerable<>),
+            typeof (System.Collections.ObjectModel.Collection<>),
+            typeof (System.Collections.ICollection),
+            typeof (System.Collections.IEnumerable),
+            typeof (System.Array)
+        };
+
+        protected virtual bool IsArrayType(Type type)
+        {
+            return ArrayTypes.Any(x => type == x);
+        }
+
+        protected virtual bool IsArrayType(CodeTypeReference typeReference)
+        {
+            return ArrayTypes.Select(GetTypeBaseName)
+                             .Any(x => StringComparer.OrdinalIgnoreCase.Equals(x, GetTypeBaseName(typeReference)));
+        }
+        #endregion
+
+        #region Dictionary Types
+        private static readonly Type[] DictionaryTypes = new Type[]
+        {
+            typeof (IDictionary<,>),
+            typeof ( Dictionary<,>)
+        };
+
+        protected virtual bool IsDictionaryType(Type type)
+        {
+            return DictionaryTypes.Any(x => type == x);
+        }
+
+        protected virtual bool IsDictionaryType(CodeTypeReference typeReference)
+        {
+            return DictionaryTypes.Select(GetTypeBaseName)
+                                  .Any(x => StringComparer.OrdinalIgnoreCase.Equals(x, GetTypeBaseName(typeReference)));
+        }
+        #endregion
 
         private void AddAllKnownTypes()
         {
@@ -69,20 +136,31 @@ namespace TypescriptCodeDom.Common.TypeMapper
                 this._typeMap[stringType.FullName] = TypeScriptTypeNames.String;
             }
 
-            _typeMap[typeof (bool).FullName] = TypeScriptTypeNames.Boolean;
-            _typeMap[typeof (void).FullName] = TypeScriptTypeNames.Void;
+            _typeMap[typeof(bool).FullName] = TypeScriptTypeNames.Boolean;
+            _typeMap[typeof(void).FullName] = TypeScriptTypeNames.Void;
             _typeMap[typeof(object).FullName] = TypeScriptTypeNames.Any;
             _typeMap[typeof(DateTime).FullName] = TypeScriptTypeNames.Date;
             _typeMap[typeof(DateTimeOffset).FullName] = TypeScriptTypeNames.Date;
 
-            _typeMap["System.Collections.Generic.List"]               = TypeScriptTypeNames.Array;
-            _typeMap["System.Collections.Generic.IList"]              = TypeScriptTypeNames.Array;
-            _typeMap["System.Collections.Generic.Collection"]         = TypeScriptTypeNames.Array;
-            _typeMap["System.Collections.Generic.ICollection"]        = TypeScriptTypeNames.Array;
-            _typeMap[typeof(System.Collections.ICollection).FullName] = TypeScriptTypeNames.Array;
-            _typeMap["System.Collections.Generic.IEnumerable"]        = TypeScriptTypeNames.Array;
-            _typeMap[typeof(System.Collections.IEnumerable).FullName] = TypeScriptTypeNames.Array;
-            _typeMap[typeof(System.Array).FullName]                   = TypeScriptTypeNames.Array;
+            foreach (Type arrayType in ArrayTypes)
+            {
+                _typeMap[GetTypeBaseName(arrayType)] = TypeScriptTypeNames.Array;
+            }
+
+            foreach (Type dictionaryType in DictionaryTypes)
+            {
+                _typeMap[GetTypeBaseName(dictionaryType)] = DictionaryFormatString;
+            }
+        }
+
+        protected string GetTypeBaseName(Type type)
+        {
+            return GetTypeBaseNamePrivate(type.FullName);
+        }
+
+        private static string GetTypeBaseNamePrivate(string typeFullName)
+        {
+            return typeFullName.Substring(typeFullName.IndexOf('`'));
         }
 
         public bool IsValidTypeForDerivation(CodeTypeReference type)
@@ -109,10 +187,37 @@ namespace TypescriptCodeDom.Common.TypeMapper
 
         protected string UpdateBaseTypeNameWithTypeArgs(string currentTypeName, CodeTypeReference typeReference)
         {
-            if ("System.Nullable".Equals(currentTypeName, StringComparison.OrdinalIgnoreCase))
+            if (GetTypeBaseName(typeof(System.Nullable)).Equals(currentTypeName, StringComparison.OrdinalIgnoreCase))
             {
                 return GetTypeOutput(typeReference.TypeArguments.OfType<CodeTypeReference>().Single());
             }
+
+            if (IsDictionaryType(typeReference))
+            {
+                // current type name should have the dictionary format string
+                if (typeReference.TypeArguments.Count == 2)
+                {
+                    // TODO: consider translate type and check for number or string result
+                    string indexTypeIdentifier;
+                    if (IsNumberType(typeReference.TypeArguments[0]))
+                    {
+                        indexTypeIdentifier = TypeScriptTypeNames.Number;
+                    }
+                    else if (IsStringType(typeReference.TypeArguments[0]))
+                    {
+                        indexTypeIdentifier = TypeScriptTypeNames.String;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Cannot create dictionary.  Key type must be string or number type.");
+                    }
+
+                    return String.Format(currentTypeName, indexTypeIdentifier, GetTypeOutput(typeReference.TypeArguments[1]));
+                }
+
+                throw new ArgumentException("Cannot create dictionary.  There must be exactly 2 type arguments.");
+            }
+
             return UpdateBaseTypeNameWithTypeArgsInner(currentTypeName, typeReference);
         }
 

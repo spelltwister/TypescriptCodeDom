@@ -39,7 +39,7 @@ namespace TypescriptCodeDom.CodeExpressions.ArrayCreate
             }
 
             var typeString = _typescriptTypeMapper.GetTypeOutput(_codeExpression.CreateType);
-            var arrayCreateString = $"{typeString}({sizeEvaluationString})";
+            var arrayCreateString = $"Array<{typeString}>({sizeEvaluationString})";
 
             var initializers = _codeExpression.Initializers
                 .OfType<CodeExpression>()

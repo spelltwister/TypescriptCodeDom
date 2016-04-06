@@ -27,11 +27,21 @@ namespace TypescriptCodeDom.CodeStatements
         public string Expand()
         {
             var statements = _statement.Statements.GetStatementsFromCollection(_statementFactory, _options);
-            var initStatement = _statementFactory.GetStatement(_statement.InitStatement, _options).Expand();
-            var incrementStatement = _statementFactory.GetStatement(_statement.IncrementStatement, _options).Expand();
-            var testExpression = _expressionFactory.GetExpression(_statement.TestExpression, _options).Evaluate();
+            var initStatement = _statementFactory.GetStatement(_statement.InitStatement, _options).Expand().Trim();
+            var incrementStatement = _statementFactory.GetStatement(_statement.IncrementStatement, _options).Expand().Trim();
+            var testExpression = _expressionFactory.GetExpression(_statement.TestExpression, _options).Evaluate().Trim();
 
-            return $"for ({initStatement}; {testExpression}; {incrementStatement} {{{statements}{Environment.NewLine}}}";
+            if (initStatement.EndsWith(";"))
+            {
+                initStatement = initStatement.Substring(0, initStatement.Length - 1);
+            }
+            if (incrementStatement.EndsWith(";"))
+            {
+                incrementStatement = incrementStatement.Substring(0, incrementStatement.Length - 1);
+            }
+
+            string indentLevel = $"{_options.IndentString}{_options.IndentString}{_options.IndentString}";
+            return $"{indentLevel}for ({initStatement}; {testExpression}; {incrementStatement}) {{{Environment.NewLine}{_options.IndentString}{statements}{Environment.NewLine}{indentLevel}}}";
         }
     }
 }

@@ -29,8 +29,9 @@ namespace TypescriptCodeDom.CodeStatements
             var type = _typescriptTypeMapper.GetTypeOutput(_statement.Type);
             var initializationExpression = _expressionFactory.GetExpression(_statement.InitExpression, _options).Evaluate();
 
-            // TODO: pretty sure this is a bug
-            return $"{_options.IndentString}{_options.IndentString}{_options.IndentString}var {_statement.Name}: {type} = {initializationExpression};}}";
+            // TODO: move indent to caller; there are many places where we would not want to indent
+            // eg, for(/*No Indent Here*/var i = 0; i < max; i++)
+            return $"{_options.IndentString}{_options.IndentString}{_options.IndentString}var {_statement.Name}: {type} = {initializationExpression};";
         }
     }
 }

@@ -30,7 +30,7 @@ namespace TypescriptCodeDom.CodeExpressions.ArrayIndexer
                     var indexExpression = _expressionFactory.GetExpression(expression, _options);
                     return indexExpression.Evaluate();
                 })
-                .Aggregate((previous, current) => $"{previous}[{current}]");
+                .Aggregate(string.Empty, (previous, current) => $"{previous}[{current}]");
 
             var targetObjectExpression = _expressionFactory.GetExpression(_codeExpression.TargetObject, _options);
             var targetObject = targetObjectExpression.Evaluate();
